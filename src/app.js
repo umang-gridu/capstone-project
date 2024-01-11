@@ -24,4 +24,9 @@ import userFileRouter from "./routes/userFile.routes.js";
 app.use("/", userFileRouter);
 app.use("/api/users", userRouter);
 
+// Redirect user to default route
+app.get("*", (_, res) => {
+  res.redirect("/");
+});
+
 export { app };
