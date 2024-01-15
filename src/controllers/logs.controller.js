@@ -42,9 +42,10 @@ const logs = asyncHandler(async (req, res) => {
     };
   }
 
-  const exercises = await Exercises.find(query).limit(limit);
+  const exercises = await Exercises.find(query).sort({ date: 1 }).limit(limit);
+  const exercisesCount = await Exercises.find(query).count();
 
-  if (exercises.length === 0) {
+  if (exercises.length === 0 && exercisesCount) {
     return res.status(400).json(new ApiError(500, "No Exercises available of this user"));
   }
 
@@ -53,7 +54,7 @@ const logs = asyncHandler(async (req, res) => {
       200,
       {
         logs: exercises,
-        count: exercises.length,
+        count: exercisesCount,
       },
       "Exercise list fetched Successfully!"
     )
