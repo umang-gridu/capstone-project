@@ -21,6 +21,10 @@ const exercises = asyncHandler(async (req, res) => {
     res.status(400).json(new ApiError(500, commonMessage.userIdIncorrect));
   }
 
+  if (!moment(date, "YYYY-MM-DD", true).isValid()) {
+    res.status(400).json(new ApiError(500, commonMessage.dateIsInvalid));
+  }
+
   const exercisesObj = await Exercises.create({
     userId: userId,
     description: description,

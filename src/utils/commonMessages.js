@@ -11,4 +11,5 @@ export const commonMessage = {
   somethingWentWrongUser: "Something went wrong while creating user!",
   somethingWentWrongExercise: "Something went wrong while creating exercise!",
   exerciseCreated: "Exercise created Successfully!",
+  dateIsInvalid: "Please add date in valid format!",
 };
