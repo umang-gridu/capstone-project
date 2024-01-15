@@ -3,6 +3,7 @@ import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { commonMessage } from "../utils/commonMessages.js";
 import convertDate from "../utils/convertDate.js";
 
 const logs = asyncHandler(async (req, res) => {
@@ -12,10 +13,10 @@ const logs = asyncHandler(async (req, res) => {
   const userFound = await User.find({
     _id: { $eq: userId },
   }).catch(() => {
-    res.status(400).json(new ApiError(500, "User Id is incorrect!"));
+    res.status(400).json(new ApiError(500, commonMessage.userIdIncorrect));
   });
 
-  if (userFound.length === 0) res.status(400).json(new ApiError(500, "User Id is incorrect!"));
+  if (userFound.length === 0) res.status(400).json(new ApiError(500, commonMessage.userIdIncorrect));
 
   let query = { userId: userId };
   if (from && to) {
@@ -45,8 +46,8 @@ const logs = asyncHandler(async (req, res) => {
   const exercises = await Exercises.find(query).sort({ date: 1 }).limit(limit);
   const exercisesCount = await Exercises.find(query).count();
 
-  if (exercises.length === 0 && exercisesCount) {
-    return res.status(400).json(new ApiError(500, "No Exercises available of this user"));
+  if (exercises.length === 0) {
+    return res.status(400).json(new ApiError(500, commonMessage.noExercises));
   }
 
   return res.status(201).json(
@@ -56,7 +57,7 @@ const logs = asyncHandler(async (req, res) => {
         logs: exercises,
         count: exercisesCount,
       },
-      "Exercise list fetched Successfully!"
+      commonMessage.exercisesFetched
     )
   );
 });
