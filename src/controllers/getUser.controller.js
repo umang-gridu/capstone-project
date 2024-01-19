@@ -11,7 +11,7 @@ const getUser = asyncHandler(async (req, res) => {
     res.status(404).json(new ApiError(404, commonMessage.userNotFound));
   }
 
-  return res.status(201).json(new ApiResponse(200, users, commonMessage.userFetched));
+  res.status(201).json(new ApiResponse(200, users, commonMessage.userFetched));
 });
 
 export { getUser };

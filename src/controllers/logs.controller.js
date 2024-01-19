@@ -47,10 +47,10 @@ const logs = asyncHandler(async (req, res) => {
   const exercisesCount = await Exercises.find(query).count();
 
   if (exercises.length === 0) {
-    return res.status(400).json(new ApiError(500, commonMessage.noExercises));
+    res.status(400).json(new ApiError(500, commonMessage.noExercises));
   }
 
-  return res.status(201).json(
+  res.status(201).json(
     new ApiResponse(
       200,
       {

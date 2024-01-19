@@ -29,7 +29,7 @@ const user = asyncHandler(async (req, res) => {
     res.status(500).json(new ApiError(500, commonMessage.somethingWentWrongUser));
   }
 
-  return res.status(201).json(new ApiResponse(200, createdUser, commonMessage.userCreated));
+  res.status(201).json(new ApiResponse(200, createdUser, commonMessage.userCreated));
 });
 
 export { user };

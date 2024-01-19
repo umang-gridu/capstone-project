@@ -38,7 +38,7 @@ const exercises = asyncHandler(async (req, res) => {
     res.status(400).json(new ApiError(500, commonMessage.somethingWentWrongExercise));
   }
 
-  return res.status(201).json(new ApiResponse(200, createdExercise, commonMessage.exerciseCreated));
+  res.status(201).json(new ApiResponse(200, createdExercise, commonMessage.exerciseCreated));
 });
 
 export { exercises };
