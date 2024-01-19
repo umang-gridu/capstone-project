@@ -10,6 +10,7 @@ import { commonMessage } from "../utils/commonMessages.js";
 const exercises = asyncHandler(async (req, res) => {
   const { description, duration, date } = req.body;
   const userId = req.params._id;
+  const verifiedDate = date === "" ? moment() : date;
 
   if ([userId, description, duration].some((field) => field?.trim() === "")) {
     res.status(400).json(new ApiError(404, commonMessage.requiredFeilds));
@@ -21,7 +22,7 @@ const exercises = asyncHandler(async (req, res) => {
     res.status(400).json(new ApiError(500, commonMessage.userIdIncorrect));
   }
 
-  if (date !== "" && !moment(date, "YYYY-MM-DD", true).isValid()) {
+  if (!moment(verifiedDate, "YYYY-MM-DD", true).isValid()) {
     res.status(400).json(new ApiError(500, commonMessage.dateIsInvalid));
   }
 
@@ -29,7 +30,7 @@ const exercises = asyncHandler(async (req, res) => {
     userId: userId,
     description: description,
     duration: duration,
-    date: date === "" ? moment() : date,
+    date: verifiedDate,
   });
 
   const createdExercise = await Exercises.findById(exercisesObj._id);
